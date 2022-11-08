@@ -20,6 +20,7 @@ RUN if [ "${VERSION}" = "latest" ]; then VERSION=$(curl -sX GET https://api.gith
 RUN ./bin/installdependencies.sh
 
 COPY --chown=runner:runner entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 USER runner
 
