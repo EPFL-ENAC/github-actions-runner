@@ -9,9 +9,11 @@ RUN useradd -m runner \
     && mkdir /home/runner/actions-runner
 WORKDIR /home/runner/actions-runner
 
-ARG VERSION="2.299.1"
+ARG VERSION="latest"
 
-RUN curl -o actions-runner-linux-x64.tar.gz -L https://github.com/actions/runner/releases/download/v${VERSION}/actions-runner-linux-x64-${VERSION}.tar.gz \
+RUN if [ "${VERSION}" = "latest" ]; then VERSION=$(curl -sX GET https://api.github.com/repos/actions/runner/releases/latest | jq .name --raw-output | sed -e "s/^v//"); fi \
+    && echo ${VERSION} \
+    && curl -o actions-runner-linux-x64.tar.gz -L https://github.com/actions/runner/releases/download/v${VERSION}/actions-runner-linux-x64-${VERSION}.tar.gz \
     && tar xzf ./actions-runner-linux-x64.tar.gz \
     && rm ./actions-runner-linux-x64.tar.gz 
 
