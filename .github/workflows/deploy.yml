@@ -15,4 +15,5 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: docker run --rm -v $(pwd)/root/.ssh:/tmp/.ssh:ro -v $(pwd)/root/.enacit-ansible_vault_password:/root/.enacit-ansible_vault_password:ro ghcr.io/epfl-enac/ansible:latest ansible-playbook -i inventory/enacvm0127.xaas.epfl.ch.yml playbooks/app-deploy.yml
+      - name: Run Ansible app-deploy
+        run: docker run --pull=always --rm -v /opt/github-actions-runner/root:/opt/root ghcr.io/epfl-enac/ansible:latest ansible-playbook -i inventory/enacvm0127.xaas.epfl.ch.yml playbooks/app-deploy.yml
