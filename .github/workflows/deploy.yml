@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: deploy
     steps:
       - uses: EPFL-ENAC/epfl-enac-deploy-action@main
         with:
