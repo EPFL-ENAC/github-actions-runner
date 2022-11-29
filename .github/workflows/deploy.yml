@@ -16,4 +16,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Ansible app-deploy
-        run: docker run --pull=always --rm -v /opt/github-actions-runner/root:/opt/root ghcr.io/epfl-enac/ansible:latest ansible-playbook -i inventory/enacvm0127.xaas.epfl.ch.yml playbooks/app-deploy.yml
+        run: docker run --pull=always --rm -v /opt/github-actions-runner/root:/opt/root ghcr.io/epfl-enac/ansible:latest ${{ github.repository }}
