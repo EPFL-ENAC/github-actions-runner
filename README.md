@@ -14,3 +14,24 @@ To create an organization access token, follow [the documentation](https://docs.
 The following organization permission should be set:
 
 - Self-hosted runners: Read and write
+
+## Add Continuous Deployment
+
+Create `.github/workflows/deploy.yml` containing :
+
+```yml
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: deploy
+    steps:
+      - uses: EPFL-ENAC/epfl-enac-deploy-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+```
