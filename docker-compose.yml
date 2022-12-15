@@ -4,7 +4,7 @@ services:
     build: .
     env_file: .env
     environment:
-      - LABELS=deploy
+      - LABELS=${LABELS}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
