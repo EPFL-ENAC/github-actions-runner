@@ -6,6 +6,7 @@ Required environment variables:
 
 - `ORGANIZATION`: e.g. EPFL-ENAC
 - `ACCESS_TOKEN`: GitHub access token
+- `LABELS`: Github runner labels (e.g. `deploy,prod` or `deploy,test`)
 
 ### Access Token
 
@@ -15,12 +16,13 @@ The following organization permission should be set:
 
 - Self-hosted runners: Read and write
 
-## Add Continuous Deployment
+## Add Continuous Deployment to PROD hosting
 
-Create `.github/workflows/deploy.yml` containing :
+Create `.github/workflows/deploy-prod.yml` containing :
 
 ```yml
-name: deploy
+# https://github.com/EPFL-ENAC/github-actions-runner#readme
+name: deploy-prod
 
 on:
   push:
@@ -29,7 +31,29 @@ on:
 
 jobs:
   deploy:
-    runs-on: deploy
+    runs-on: [self-hosted, deploy, prod]
+    steps:
+      - uses: EPFL-ENAC/epfl-enac-deploy-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+## Add Continuous Deployment to TEST hosting
+
+Create `.github/workflows/deploy-test.yml` containing :
+
+```yml
+# https://github.com/EPFL-ENAC/github-actions-runner#readme
+name: deploy-test
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, deploy, test]
     steps:
       - uses: EPFL-ENAC/epfl-enac-deploy-action@main
         with:
